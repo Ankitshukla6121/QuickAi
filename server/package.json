@@ -1,20 +1,28 @@
 {
   "name": "server",
   "version": "1.0.0",
-  "main": "index.js",
+  "main": "server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "server": "nodemon server.js"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "type": "commonjs",
+  "type": "module",
   "description": "",
   "dependencies": {
+    "@clerk/express": "^1.7.16",
+    "@google/generative-ai": "^0.24.1",
+    "@neondatabase/serverless": "^1.0.1",
+    "axios": "^1.11.0",
+    "cloudinary": "^2.7.0",
     "cors": "^2.8.5",
     "dotenv": "^17.2.1",
     "express": "^5.1.0",
     "mongoose": "^8.17.0",
-    "nodemon": "^3.1.10"
+    "multer": "^2.0.2",
+    "nodemon": "^3.1.10",
+    "openai": "^5.12.0"
   }
 }
