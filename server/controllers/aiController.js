@@ -141,7 +141,7 @@ export const generateImage = async (req, res) => {
 
         await sql`INSERT INTO creations(user_id, prompt, content, type, publish) VALUES(${userId}, ${prompt}, ${secure_url}, 'image', ${publish ?? false})`;
 
-        res.status(201).json({ success: true, secure_url });
+        res.status(201).json({ success: true, content:secure_url });
     } catch (error) {
         res.json({success:false, message:error.message})
     }
@@ -150,18 +150,12 @@ export const generateImage = async (req, res) => {
 export const removeImageBackground = async (req, res) => {
     try {
         const { userId } = req.auth();
-        const {image}= req.file;
+        const image= req.file;
         const plan = req.plan;
 
         if (plan !== 'premium') {
             return res.status(403).json({ success: false, message: "This feature is only available for premium subscriptions." });
         }
-
-        if (!prompt) {
-            return res.status(400).json({ success: false, message: "Prompt cannot be empty." });
-        }
-      
-
        
         const { secure_url } = await cloudinary.uploader.upload(image.path,{
             transformation:[
@@ -184,15 +178,11 @@ export const removeImageObject = async (req, res) => {
     try {
         const { userId } = req.auth();
         const {object}= req.body
-        const {image}= req.file;
+        const image= req.file;
         const plan = req.plan;
         
         if (plan !== 'premium') {
             return res.status(403).json({ success: false, message: "This feature is only available for premium subscriptions." });
-        }
-
-        if (!prompt) {
-            return res.status(400).json({ success: false, message: "Prompt cannot be empty." });
         }
       
 
@@ -247,7 +237,7 @@ export const resumeReview = async (req, res) => {
 
         const content = response.choices[0].message.content;
 
-        await sql`INSERT INTO creations(user_id, prompt, content, type) VALUES(${userId}, 'Review the uploaded resume', ${imageUrl}, 'resume-review')`;
+        await sql`INSERT INTO creations(user_id, prompt, content, type) VALUES(${userId}, 'Review the uploaded resume', ${content}, 'resume-review')`;
 
         res.status(201).json({ success: true, content });
     } catch (error) {

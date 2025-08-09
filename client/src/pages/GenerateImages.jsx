@@ -37,12 +37,12 @@ const GenerateImages = () => {
 
         const prompt = `Generate an image of ${input} in the style ${selectedStyle}`
 
-         const {data}= await axios.post('/api/ai/generate-image',{prompt},{
+         const {data}= await axios.post('/api/ai/generate-image',{prompt,publish},{
         headers:{Authorization:`Bearer ${await getToken()}`}
       })
 
       if(data.success){
-        console.log(content)
+        
         setContent(data.content) 
       }else{
         toast.error(data.message)
